@@ -139,7 +139,8 @@ class QRNN(torch.nn.Module):
 
         super(QRNN, self).__init__()
 
-        self.layers = torch.nn.ModuleList(layers if layers else [QRNNLayer(input_size, hidden_size, **kwargs) for _ in range(num_layers)])
+        self.layers = torch.nn.ModuleList(layers if layers else [QRNNLayer(input_size, hidden_size, **kwargs)] + [
+                                          QRNNLayer(hidden_size, hidden_size, **kwargs) for _ in range(num_layers - 1)])
 
         self.input_size = input_size
         self.hidden_size = hidden_size
